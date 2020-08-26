@@ -41,6 +41,7 @@
 
 #include <stdio.h>
 #include <algorithm>
+#include <chrono>
 
 #include <cub/util_allocator.cuh>
 #include <cub/device/device_radix_sort.cuh>
@@ -194,8 +195,12 @@ int main(int argc, char** argv)
     CubDebugExit(cudaMemcpy(d_keys.d_buffers[d_keys.selector], h_keys, sizeof(float) * num_items, cudaMemcpyHostToDevice));
     CubDebugExit(cudaMemcpy(d_values.d_buffers[d_values.selector], h_values, sizeof(int) * num_items, cudaMemcpyHostToDevice));
 
-    // Run
+    auto start = std::chrono::steady_clock::now();
     CubDebugExit(DeviceRadixSort::SortPairs(d_temp_storage, temp_storage_bytes, d_keys, d_values, num_items));
+    CubDebugExit(cudaDeviceSynchronize());
+    auto end = std::chrono::steady_clock::now();
+    std::chrono::duration<double> elapsed_seconds = end - start;
+    printf("Took %0.4fms to sort %d elems.\n", elapsed_seconds.count() * 1000, num_items);
 
     // Check for correctness (and display results, if specified)
     int compare = CompareDeviceResults(h_reference_keys, d_keys.Current(), num_items, true, g_verbose);

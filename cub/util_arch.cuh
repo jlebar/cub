@@ -45,7 +45,7 @@ namespace cub {
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS    // Do not document
 
-#if ((__CUDACC_VER_MAJOR__ >= 9) || defined(__NVCOMPILER_CUDA__)) && \
+#if ((CUDA_VERSION >= 9) || (__CUDACC_VER_MAJOR__ >= 9) || defined(__NVCOMPILER_CUDA__)) && \
         !defined(CUB_USE_COOPERATIVE_GROUPS)
     #define CUB_USE_COOPERATIVE_GROUPS
 #endif

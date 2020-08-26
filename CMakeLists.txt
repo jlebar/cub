@@ -27,13 +27,13 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 message("-- C++ Standard version: ${CMAKE_CXX_STANDARD}")
 
-if (NOT "${CMAKE_CUDA_HOST_COMPILER}" STREQUAL "")
-  unset(CMAKE_CUDA_HOST_COMPILER CACHE)
-  message(FATAL_ERROR "CUB tests and examples require the C++ compiler"
-      " and the CUDA host compiler to be the same; to set this compiler, please"
-      " use the CMAKE_CXX_COMPILER variable, not the CMAKE_CUDA_HOST_COMPILER"
-      " variable.")
-endif ()
+#if (NOT "${CMAKE_CUDA_HOST_COMPILER}" STREQUAL "")
+#  unset(CMAKE_CUDA_HOST_COMPILER CACHE)
+#  message(FATAL_ERROR "CUB tests and examples require the C++ compiler"
+#      " and the CUDA host compiler to be the same; to set this compiler, please"
+#      " use the CMAKE_CXX_COMPILER variable, not the CMAKE_CUDA_HOST_COMPILER"
+#      " variable.")
+#endif ()
 set(CMAKE_CUDA_HOST_COMPILER ${CMAKE_CXX_COMPILER})
 
 enable_language(CUDA)
@@ -52,7 +52,7 @@ unset(CMAKE_CUDA_STANDARD CACHE)
 set(CMAKE_CUDA_STANDARD ${CMAKE_CXX_STANDARD})
 
 set(CUB_HIGHEST_COMPUTE_ARCH 75)
-set(CUB_KNOWN_COMPUTE_ARCHS 30 32 35 50 52 53 60 61 62 70 72 75)
+set(CUB_KNOWN_COMPUTE_ARCHS 75)
 
 option(CUB_DISABLE_ARCH_BY_DEFAULT "If ON, then all CUDA architectures are disabled on the initial CMake run." OFF)
 set(OPTION_INIT ON)
